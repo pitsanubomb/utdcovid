@@ -46,39 +46,28 @@
 
     <div class="container">
         <!-- Content here -->
-        <div class="row mt-3">
-            <div class="col-sm-6 mb-3">
-                <div class="card card text-white bg-danger">
-                    <div class="card-header">รายใหม่</div>
-                    <div class="card-body">
-                        <p class="card-text" id="newPerson"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="card card text-white bg-success">
-                    <div class="card-header">รวม</div>
-                    <div class="card-body">
-                        <p class="card-text" id="sumPerson"></p>
-                    </div>
-                </div>
-            </div>
+        <!-- Start First -->
+
+        <div class="d-flex justify-content-center mt-5">
+            <video id="video" width="320" height="240" autoplay></video>
+        </div>
+        <div class="d-grid gap-2 mt-2">
+            <button class="btn btn-primary" type="button">Scan Idcard</button>
         </div>
     </div>
+
 </body>
 
 </html>
-<script src="app/fetch.js"></script>
 <script src="app/nav.js"></script>
 <script>
-    const baseUrl = 'https://covid19.ddc.moph.go.th/api'
-    const renderCovidToday = async () => await getData(`${baseUrl}/Cases/today-cases-by-provinces`);
-    renderCovidToday().then((d) => {
-        let data = d[67]
-        document.getElementById(`newPerson`).innerText = `${data['new_case']}`
-        document.getElementById(`sumPerson`).innerText = `${data['total_case']}`
-    })
+    let stream
+    const camera = async () => {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        document.getElementById(`video`).srcObject = stream
+    }
 
+    camera()
 </script>
 <!-- <script>
     let camera_button = document.querySelector("#start-camera");
