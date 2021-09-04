@@ -49,10 +49,11 @@
         <!-- Start First -->
 
         <div class="d-flex justify-content-center mt-5">
-            <video id="video" width="320" height="240" autoplay></video>
+            <video id="video" width="50%" height="30%" autoplay></video>
+            <canvas id="canvas" style="display: none;"></canvas>
         </div>
         <div class="d-grid gap-2 mt-2">
-            <button class="btn btn-primary" type="button">Scan Idcard</button>
+            <button class="btn btn-primary" type="button" onclick="capture()">Scan Idcard</button>
         </div>
     </div>
 
@@ -60,14 +61,18 @@
 
 </html>
 <script src="app/nav.js"></script>
+<script src="app/camera.js"></script>
 <script>
-    let stream
-    const camera = async () => {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        document.getElementById(`video`).srcObject = stream
-    }
-
+    const canvas = document.getElementById("canvas");
+    const video = document.getElementById("video");
+    const image = document.getElementById(`img`);
     camera()
+    const capture = () => {
+        video.style.display = "none";
+
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        let image_data_url = canvas.toDataURL('image/jpeg');
+    }
 </script>
 <!-- <script>
     let camera_button = document.querySelector("#start-camera");
